@@ -16,7 +16,7 @@ public class PasswordController {
         this.passwordService = passwordService;
     }
 
-    @CrossOrigin(origins = "https://port-0-gsm-cyber-guardians-m3wt730naaaf171b.sel4.cloudtype.app/")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/evaluate")
     public ResponseEntity<PasswordEvaluationResponse> evaluatePassword(@RequestBody PasswordRequest request) {
         PasswordEvaluationResponse response = passwordService.evaluatePassword(request.getPassword());
