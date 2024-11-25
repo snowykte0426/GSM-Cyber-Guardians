@@ -4,10 +4,7 @@ import com.cyber_guardians.Cyber_Guardians.Dto.PasswordEvaluationResponse;
 import com.cyber_guardians.Cyber_Guardians.Dto.PasswordRequest;
 import com.cyber_guardians.Cyber_Guardians.Service.PasswordService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/password")
@@ -19,6 +16,7 @@ public class PasswordController {
         this.passwordService = passwordService;
     }
 
+    @CrossOrigin(origins = "https://port-0-gsm-cyber-guardians-m3wt730naaaf171b.sel4.cloudtype.app/")
     @PostMapping("/evaluate")
     public ResponseEntity<PasswordEvaluationResponse> evaluatePassword(@RequestBody PasswordRequest request) {
         PasswordEvaluationResponse response = passwordService.evaluatePassword(request.getPassword());
