@@ -1,5 +1,8 @@
 package com.cyber_guardians.Cyber_Guardians.Dto;
 
+import lombok.Getter;
+
+@Getter
 public class PasswordRequest {
     private String password;
 

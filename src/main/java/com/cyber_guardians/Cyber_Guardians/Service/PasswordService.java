@@ -1,11 +1,13 @@
 package com.cyber_guardians.Cyber_Guardians.Service;
 
 import com.cyber_guardians.Cyber_Guardians.Dto.PasswordEvaluationResponse;
-import com.cyber_guardians.Cyber_Guardians.Util
+import com.cyber_guardians.Cyber_Guardians.Util.PasswordCrackingTimeCalculator;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PasswordService {
 
     public PasswordEvaluationResponse evaluatePassword(String password) {

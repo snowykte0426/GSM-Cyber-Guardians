@@ -1,28 +1,18 @@
 package com.cyber_guardians.Cyber_Guardians.Dto;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class PasswordEvaluationResponse {
-    private int score;
-    private String strength;
+    private String crackingTime; // 남김
     private List<String> recommendations;
 
-    public PasswordEvaluationResponse(int score, String strength, List<String> recommendations) {
-        this.score = score;
-        this.strength = strength;
+    public PasswordEvaluationResponse(String crackingTime, List<String> recommendations) {
+        this.crackingTime = crackingTime;
         this.recommendations = recommendations;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public String getStrength() {
-        return strength;
-    }
-
-    public List<String> getRecommendations() {
-        return recommendations;
-    }
+    // Getter & Setter
 }
-
