@@ -12,12 +12,24 @@ public class PasswordService {
 
     public PasswordEvaluationResponse evaluatePassword(String password) {
         String crackingTime = PasswordCrackingTimeCalculator.calculateCrackingTime(password);
-        String strength = PasswordCrackingTimeCalculator.calculateStrength(password); // 강도 계산
+        String strength = determineStrengthByTime(crackingTime); // 시간을 기준으로 강도 계산
 
         List<String> recommendations = generateRecommendations(password);
 
-        // 올바른 매개변수로 PasswordEvaluationResponse 생성
         return new PasswordEvaluationResponse(crackingTime, strength, recommendations);
+    }
+
+    private String determineStrengthByTime(String crackingTime) {
+        if (crackingTime.endsWith("seconds")) {
+            return "Weak";
+        } else if (crackingTime.endsWith("hours") || crackingTime.endsWith("minutes")) {
+            return "Moderate";
+        } else if (crackingTime.endsWith("days")) {
+            return "Strong";
+        } else if (crackingTime.endsWith("years")) {
+            return "Very Strong";
+        }
+        return "Unknown";
     }
 
     private List<String> generateRecommendations(String password) {
