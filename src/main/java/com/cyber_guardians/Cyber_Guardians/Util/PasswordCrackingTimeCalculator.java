@@ -27,20 +27,16 @@ public class PasswordCrackingTimeCalculator {
     }
 
     private static String formatTime(long seconds) {
-        if (seconds < 60) return seconds + " seconds";
+        if (seconds < 60) return seconds + " 초";
         long minutes = seconds / 60;
-        if (minutes < 60) return minutes + " minutes";
+        if (minutes < 60) return minutes + " 분";
         long hours = minutes / 60;
-        if (hours < 24) return hours + " hours";
+        if (hours < 24) return hours + " 시간";
         long days = hours / 24;
-        if (days < 30) return days + " days";
+        if (days < 30) return days + " 일";
         long months = days / 30;
-        long remainingDays = days % 30;
-        if (months < 12) {
-            if (remainingDays > 0) return months + " months and " + remainingDays + " days";
-            return months + " months";
-        }
+        if (months < 12) return months + " 달";
         long years = months / 12;
-        return years + " years";
+        return years + " 년";
     }
 }

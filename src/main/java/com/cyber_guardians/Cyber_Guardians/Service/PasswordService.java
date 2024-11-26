@@ -20,16 +20,16 @@ public class PasswordService {
     }
 
     public String determineStrengthByTime(String crackingTime) {
-        if (crackingTime.endsWith("seconds") || crackingTime.endsWith("hours")) {
-            return "Weak";
-        } else if (crackingTime.endsWith("minutes") || crackingTime.equals("days")) {
-            return "Moderate";
-        } else if (crackingTime.contains("months") && crackingTime.contains("days")) {
-            return "Strong";
-        } else if (crackingTime.endsWith("months")) {
-            return "Strong";
-        } else if (crackingTime.endsWith("years")) {
-            return "Very Strong";
+        if (crackingTime.endsWith("초") || crackingTime.endsWith("분")) {
+            return "위험한";
+        } else if (crackingTime.endsWith("시간") || crackingTime.equals("일")) {
+            return "평균적인";
+        } else if (crackingTime.contains("달") && crackingTime.contains("일")) {
+            return "강력한";
+        } else if (crackingTime.endsWith("달")) {
+            return "강력한";
+        } else if (crackingTime.endsWith("년")) {
+            return "매우 강력한";
         }
         return "Unknown";
     }
@@ -38,11 +38,11 @@ public class PasswordService {
     private List<String> generateRecommendations(String password) {
         List<String> recommendations = new ArrayList<>();
 
-        if (password.length() < 8) recommendations.add("Use a longer password");
-        if (!password.matches(".*[A-Z].*")) recommendations.add("Add uppercase letters");
-        if (!password.matches(".*[a-z].*")) recommendations.add("Add lowercase letters");
-        if (!password.matches(".*[0-9].*")) recommendations.add("Add numbers");
-        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) recommendations.add("Add special characters");
+        if (password.length() < 8) recommendations.add("패스워드의 길이가 너무 짧습니다!");
+        if (!password.matches(".*[A-Z].*")) recommendations.add("대문자를 추가하세요!");
+        if (!password.matches(".*[a-z].*")) recommendations.add("소문자를 추가하세요!");
+        if (!password.matches(".*[0-9].*")) recommendations.add("숫자를 추가하세요!");
+        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) recommendations.add("특수문자를 추가하세요!");
 
         return recommendations;
     }
