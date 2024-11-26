@@ -1,56 +1,46 @@
-package com.cyber_guardians.Cyber_Guardians.Util;
+package com.cyber_guardians.Cyber_Guardians.Service;
 
-public class PasswordCrackingTimeCalculator {
+import com.cyber_guardians.Cyber_Guardians.Dto.PasswordEvaluationResponse;
+import com.cyber_guardians.Cyber_Guardians.Util.PasswordCrackingTimeCalculator;
+import org.springframework.stereotype.Service;
 
-    public static String calculateCrackingTime(String password) {
-        int charsetSize = getCharsetSize(password);
-        long combinations = (long) Math.pow(charsetSize, password.length());
-        long guessesPerSecond = 1_000_000_000; // 초당 10억 시도 가정
-        long seconds = combinations / guessesPerSecond;
+import java.util.ArrayList;
+import java.util.List;
 
-        return formatTime(seconds);
+@Service
+public class PasswordService {
+
+    public PasswordEvaluationResponse evaluatePassword(String password) {
+        String crackingTime = PasswordCrackingTimeCalculator.calculateCrackingTime(password);
+        String strength = determineStrengthByTime(crackingTime); // 시간을 기준으로 강도 계산
+
+        List<String> recommendations = generateRecommendations(password);
+
+        return new PasswordEvaluationResponse(crackingTime, strength, recommendations);
     }
 
-    public static String calculateStrength(String password) {
-        int length = password.length();
-        int charsetSize = getCharsetSize(password);
-
-        if (length < 6 || charsetSize < 26) {
+    private String determineStrengthByTime(String crackingTime) {
+        if (crackingTime.endsWith("seconds")) {
             return "Weak";
-        } else if (length < 8 || charsetSize < 52) {
+        } else if (crackingTime.endsWith("minutes") || crackingTime.endsWith("hours")) {
             return "Moderate";
-        } else if (length >= 8 && charsetSize >= 52) {
+        } else if (crackingTime.endsWith("days")) {
             return "Strong";
-        } else if (length >= 12 && charsetSize >= 95) {
+        } else if (crackingTime.endsWith("years")) {
             return "Very Strong";
         }
         return "Unknown";
     }
 
-    private static int getCharsetSize(String password) {
-        boolean hasLower = password.matches(".*[a-z].*");
-        boolean hasUpper = password.matches(".*[A-Z].*");
-        boolean hasDigit = password.matches(".*[0-9].*");
-        boolean hasSpecial = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
+    private List<String> generateRecommendations(String password) {
+        List<String> recommendations = new ArrayList<>();
 
-        int size = 0;
-        if (hasLower) size += 26;
-        if (hasUpper) size += 26;
-        if (hasDigit) size += 10;
-        if (hasSpecial) size += 33;
+        if (password.length() < 8) recommendations.add("Use a longer password");
+        if (!password.matches(".*[A-Z].*")) recommendations.add("Add uppercase letters");
+        if (!password.matches(".*[a-z].*")) recommendations.add("Add lowercase letters");
+        if (!password.matches(".*[0-9].*")) recommendations.add("Add numbers");
+        if (!password.matches(".*[!@#$%^&*(),.?\":{}|<>].*")) recommendations.add("Add special characters");
 
-        return size;
-    }
-
-    private static String formatTime(long seconds) {
-        if (seconds < 60) return seconds + " seconds";
-        long minutes = seconds / 60;
-        if (minutes < 60) return minutes + " minutes";
-        long hours = minutes / 60;
-        if (hours < 24) return hours + " hours";
-        long days = hours / 24;
-        if (days < 365) return days + " days";
-        long years = days / 365;
-        return years + " years";
+        return recommendations;
     }
 }
