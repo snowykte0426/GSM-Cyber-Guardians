@@ -21,15 +21,15 @@ public class PasswordService {
 
     public String determineStrengthByTime(String crackingTime) {
         if (crackingTime.endsWith("초") || crackingTime.endsWith("분")) {
-            return "위험한";
+            return "Weak";
         } else if (crackingTime.endsWith("시간") || crackingTime.equals("일")) {
-            return "평균적인";
+            return "Moderate";
         } else if (crackingTime.contains("달") && crackingTime.contains("일")) {
-            return "강력한";
+            return "Strong";
         } else if (crackingTime.endsWith("달")) {
-            return "강력한";
+            return "Strong";
         } else if (crackingTime.endsWith("년")) {
-            return "매우 강력한";
+            return "Very Strong";
         }
         return "Unknown";
     }
