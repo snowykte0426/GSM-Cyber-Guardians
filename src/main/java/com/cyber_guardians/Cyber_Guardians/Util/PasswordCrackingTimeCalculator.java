@@ -11,22 +11,6 @@ public class PasswordCrackingTimeCalculator {
         return formatTime(seconds);
     }
 
-    public static String calculateStrength(String password) {
-        int length = password.length();
-        int charsetSize = getCharsetSize(password);
-
-        if (length < 6 || charsetSize < 26) {
-            return "Weak";
-        } else if (length < 8 || charsetSize < 52) {
-            return "Moderate";
-        } else if (length >= 8 && charsetSize >= 52) {
-            return "Strong";
-        } else if (length >= 12 && charsetSize >= 95) {
-            return "Very Strong";
-        }
-        return "Unknown";
-    }
-
     private static int getCharsetSize(String password) {
         boolean hasLower = password.matches(".*[a-z].*");
         boolean hasUpper = password.matches(".*[A-Z].*");
@@ -49,8 +33,14 @@ public class PasswordCrackingTimeCalculator {
         long hours = minutes / 60;
         if (hours < 24) return hours + " hours";
         long days = hours / 24;
-        if (days < 365) return days + " days";
-        long years = days / 365;
+        if (days < 30) return days + " days";
+        long months = days / 30;
+        long remainingDays = days % 30;
+        if (months < 12) {
+            if (remainingDays > 0) return months + " months and " + remainingDays + " days";
+            return months + " months";
+        }
+        long years = months / 12;
         return years + " years";
     }
 }

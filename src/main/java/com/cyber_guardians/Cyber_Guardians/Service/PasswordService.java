@@ -19,18 +19,21 @@ public class PasswordService {
         return new PasswordEvaluationResponse(crackingTime, strength, recommendations);
     }
 
-    private String determineStrengthByTime(String crackingTime) {
-        if (crackingTime.endsWith("seconds")) {
+    public String determineStrengthByTime(String crackingTime) {
+        if (crackingTime.endsWith("seconds") || crackingTime.endsWith("hours")) {
             return "Weak";
-        } else if (crackingTime.endsWith("hours") || crackingTime.endsWith("minutes")) {
+        } else if (crackingTime.endsWith("minutes") || crackingTime.equals("days")) {
             return "Moderate";
-        } else if (crackingTime.endsWith("days")) {
+        } else if (crackingTime.contains("months") && crackingTime.contains("days")) {
+            return "Strong";
+        } else if (crackingTime.endsWith("months")) {
             return "Strong";
         } else if (crackingTime.endsWith("years")) {
             return "Very Strong";
         }
         return "Unknown";
     }
+
 
     private List<String> generateRecommendations(String password) {
         List<String> recommendations = new ArrayList<>();
