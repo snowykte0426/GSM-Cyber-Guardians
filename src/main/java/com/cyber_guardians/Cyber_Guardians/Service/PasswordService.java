@@ -12,10 +12,12 @@ public class PasswordService {
 
     public PasswordEvaluationResponse evaluatePassword(String password) {
         String crackingTime = PasswordCrackingTimeCalculator.calculateCrackingTime(password);
+        String strength = PasswordCrackingTimeCalculator.calculateStrength(password); // 강도 계산
 
         List<String> recommendations = generateRecommendations(password);
 
-        return new PasswordEvaluationResponse(crackingTime, recommendations);
+        // 올바른 매개변수로 PasswordEvaluationResponse 생성
+        return new PasswordEvaluationResponse(crackingTime, strength, recommendations);
     }
 
     private List<String> generateRecommendations(String password) {
