@@ -24,8 +24,6 @@ public class PasswordService {
             return "Weak";
         } else if (crackingTime.endsWith("시간") || crackingTime.equals("일")) {
             return "Moderate";
-        } else if (crackingTime.contains("달") && crackingTime.contains("일")) {
-            return "Strong";
         } else if (crackingTime.endsWith("달")) {
             return "Strong";
         } else if (crackingTime.endsWith("년")) {
